@@ -1,3 +1,4 @@
+//go:generate mockgen -source=task_service.go -destination=mocks/mock_task_service.go -package=mocks
 package service
 
 import (
@@ -28,7 +29,7 @@ func (s *impl) GetAllTask(ctx context.Context) ([]*entity.Task, error) {
 }
 
 func (s *impl) GetTaskByID(ctx context.Context, id string) (*entity.Task, error) {
-	return s.taskRepo.FindByID(ctx, id)
+	return s.taskRepo.Find(ctx, id)
 }
 
 func (s *impl) CreateTask(ctx context.Context, task *entity.Task) error {

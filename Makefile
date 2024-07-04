@@ -1,5 +1,4 @@
 lint:
-	go mod tidy
 	golangci-lint run ./... --timeout=10m
 
 test:
@@ -7,7 +6,9 @@ test:
 	go generate ./...
 	go test ./... -v -coverprofile .testCoverage.txt
 
-build:
+prepare:
 	go mod tidy
 	swag init -g main.go
-	go build -o build/app/server main.go
+
+run:
+	go run main.go

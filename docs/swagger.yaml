@@ -2,34 +2,48 @@ definitions:
   dto.TaskCreateRequest:
     properties:
       name:
+        example: task name
         type: string
+    required:
+    - name
     type: object
   dto.TaskCreateResponse:
     properties:
       id:
+        example: AEF4D3E1-4D3E-4D3E-4D3E-4D3E4D3E4D3E
         type: string
     type: object
   dto.TaskResponse:
     properties:
       created_at:
+        example: "2024-07-04 12:00:00"
         type: string
       id:
+        example: AEF4D3E1-4D3E-4D3E-4D3E-4D3E4D3E4D3E
         type: string
       name:
+        example: task name
         type: string
       status:
-        $ref: '#/definitions/vo.Status'
+        allOf:
+        - $ref: '#/definitions/vo.Status'
+        example: 0
       update_at:
+        example: "2024-07-04 15:00:00"
         type: string
     type: object
   dto.TaskUpdateRequest:
     properties:
       id:
+        example: AEF4D3E1-4D3E-4D3E-4D3E-4D3E4D3E4D3E
         type: string
       name:
+        example: task name
         type: string
       status:
-        $ref: '#/definitions/vo.Status'
+        allOf:
+        - $ref: '#/definitions/vo.Status'
+        example: 1
     type: object
   main.Error:
     properties:

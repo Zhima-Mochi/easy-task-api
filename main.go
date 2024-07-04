@@ -6,8 +6,12 @@ import (
 	"github.com/Zhima-Mochi/easy-task-api/app"
 	"github.com/Zhima-Mochi/easy-task-api/app/dto"
 	doc "github.com/Zhima-Mochi/easy-task-api/docs"
+	"github.com/Zhima-Mochi/easy-task-api/domain/repo"
 	"github.com/Zhima-Mochi/easy-task-api/domain/service"
+	"github.com/Zhima-Mochi/easy-task-api/infra/persistence"
+	"github.com/Zhima-Mochi/easy-task-api/middleware"
 	"github.com/gin-gonic/gin"
+	"github.com/sirupsen/logrus"
 	swaggerfiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
 )
@@ -150,9 +154,20 @@ func (h *handler) DeleteTask(c *gin.Context) {
 }
 
 func main() {
-	handler := &handler{}
+	defer func() {
+		if r := recover(); r != nil {
+			logrus.Fatalf("panic: %v", r)
+		}
+	}()
+
+	persistence := persistence.NewPersistence()
+	taskRepo := repo.NewTaskRepository(persistence)
+	taskService := service.NewTaskService(taskRepo)
+	taskAppService := app.NewTaskAppService(taskService)
+	handler := NewHandler(taskAppService)
 
 	router := gin.Default()
+	router.Use(middleware.TraceMiddleware())
 
 	router.GET("/tasks", handler.GetAllTask)
 	router.GET("/tasks/:id", handler.GetTaskByID)

@@ -28,8 +28,8 @@ func ToTaskResponse(task *entity.Task) *dto.TaskResponse {
 func ToDomainTaskUpdate(req *dto.TaskUpdateRequest) *entity.Task {
 	task := &entity.Task{
 		ID:     req.ID,
-		Name:   req.Name,
-		Status: req.Status,
+		Name:   *req.Name,
+		Status: *req.Status,
 	}
 	return task
 }

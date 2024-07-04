@@ -217,9 +217,13 @@ const docTemplate = `{
     "definitions": {
         "dto.TaskCreateRequest": {
             "type": "object",
+            "required": [
+                "name"
+            ],
             "properties": {
                 "name": {
-                    "type": "string"
+                    "type": "string",
+                    "example": "task name"
                 }
             }
         },
@@ -227,7 +231,8 @@ const docTemplate = `{
             "type": "object",
             "properties": {
                 "id": {
-                    "type": "string"
+                    "type": "string",
+                    "example": "AEF4D3E1-4D3E-4D3E-4D3E-4D3E4D3E4D3E"
                 }
             }
         },
@@ -235,19 +240,28 @@ const docTemplate = `{
             "type": "object",
             "properties": {
                 "created_at": {
-                    "type": "string"
+                    "type": "string",
+                    "example": "2024-07-04 12:00:00"
                 },
                 "id": {
-                    "type": "string"
+                    "type": "string",
+                    "example": "AEF4D3E1-4D3E-4D3E-4D3E-4D3E4D3E4D3E"
                 },
                 "name": {
-                    "type": "string"
+                    "type": "string",
+                    "example": "task name"
                 },
                 "status": {
-                    "$ref": "#/definitions/vo.Status"
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/vo.Status"
+                        }
+                    ],
+                    "example": 0
                 },
                 "update_at": {
-                    "type": "string"
+                    "type": "string",
+                    "example": "2024-07-04 15:00:00"
                 }
             }
         },
@@ -255,13 +269,20 @@ const docTemplate = `{
             "type": "object",
             "properties": {
                 "id": {
-                    "type": "string"
+                    "type": "string",
+                    "example": "AEF4D3E1-4D3E-4D3E-4D3E-4D3E4D3E4D3E"
                 },
                 "name": {
-                    "type": "string"
+                    "type": "string",
+                    "example": "task name"
                 },
                 "status": {
-                    "$ref": "#/definitions/vo.Status"
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/vo.Status"
+                        }
+                    ],
+                    "example": 1
                 }
             }
         },

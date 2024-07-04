@@ -1,3 +1,4 @@
+//go:generate mockgen -source=task_app_service.go -destination=mocks/mock_task_app_service.go -package=mocks
 package app
 
 import (
@@ -9,6 +10,10 @@ import (
 
 type TaskAppService interface {
 	CreateTask(ctx context.Context, req *dto.TaskCreateRequest) (*dto.TaskCreateResponse, error)
+	GetAllTask(ctx context.Context) ([]*dto.TaskResponse, error)
+	GetTaskByID(ctx context.Context, id string) (*dto.TaskResponse, error)
+	UpdateTask(ctx context.Context, req *dto.TaskUpdateRequest) error
+	DeleteTask(ctx context.Context, id string) error
 }
 
 type impl struct {

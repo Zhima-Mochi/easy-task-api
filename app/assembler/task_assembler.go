@@ -24,12 +24,3 @@ func ToTaskResponse(task *entity.Task) *dto.TaskResponse {
 		UpdateAt:  task.UpdateAt.Format("2006-01-02 15:04:05"),
 	}
 }
-
-func ToDomainTaskUpdate(req *dto.TaskUpdateRequest) *entity.Task {
-	task := &entity.Task{
-		ID:     req.ID,
-		Name:   *req.Name,
-		Status: *req.Status,
-	}
-	return task
-}

@@ -115,11 +115,15 @@ func (h *handler) CreateTask(c *gin.Context) {
 // @Failure 500 {object} Error
 // @Router /tasks/{id} [put]
 func (h *handler) UpdateTask(c *gin.Context) {
+	id := c.Param("id")
+
 	var req dto.TaskUpdateRequest
 	if err := c.BindJSON(&req); err != nil {
 		c.JSON(400, gin.H{"error": err.Error()})
 		return
 	}
+
+	req.ID = id
 
 	err := h.taskAppService.UpdateTask(c, &req)
 	if err != nil {
@@ -144,6 +148,7 @@ func (h *handler) UpdateTask(c *gin.Context) {
 // @Router /tasks/{id} [delete]
 func (h *handler) DeleteTask(c *gin.Context) {
 	id := c.Param("id")
+
 	err := h.taskAppService.DeleteTask(c, id)
 	if err != nil {
 		c.JSON(500, gin.H{"error": err.Error()})
@@ -154,6 +159,7 @@ func (h *handler) DeleteTask(c *gin.Context) {
 }
 
 func main() {
+	logrus.SetFormatter(&logrus.JSONFormatter{})
 	defer func() {
 		if r := recover(); r != nil {
 			logrus.Fatalf("panic: %v", r)

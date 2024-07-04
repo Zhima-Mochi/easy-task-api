@@ -49,7 +49,7 @@ func TraceMiddleware() gin.HandlerFunc {
 
 		c.Next()
 
-		fields["latency"] = time.Since(startTime)
+		fields["latency"] = time.Since(startTime).Milliseconds()
 		status := c.Writer.Status()
 		fields["status_code"] = status
 

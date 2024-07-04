@@ -268,10 +268,6 @@ const docTemplate = `{
         "dto.TaskUpdateRequest": {
             "type": "object",
             "properties": {
-                "id": {
-                    "type": "string",
-                    "example": "AEF4D3E1-4D3E-4D3E-4D3E-4D3E4D3E4D3E"
-                },
                 "name": {
                     "type": "string",
                     "example": "task name"

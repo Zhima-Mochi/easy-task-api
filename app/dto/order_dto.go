@@ -40,7 +40,7 @@ type TaskResponse struct {
 
 // TaskUpdateRequest represents a request to update a task.
 type TaskUpdateRequest struct {
-	ID     string     `json:"id" example:"AEF4D3E1-4D3E-4D3E-4D3E-4D3E4D3E4D3E"`
+	ID     string     `json:"-"`
 	Name   *string    `json:"name" example:"task name"`
 	Status *vo.Status `json:"status" example:"1"`
 }

@@ -34,9 +34,6 @@ definitions:
     type: object
   dto.TaskUpdateRequest:
     properties:
-      id:
-        example: AEF4D3E1-4D3E-4D3E-4D3E-4D3E4D3E4D3E
-        type: string
       name:
         example: task name
         type: string

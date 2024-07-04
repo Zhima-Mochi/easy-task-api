@@ -7,6 +7,7 @@ import (
 	"github.com/Zhima-Mochi/easy-task-api/app/assembler"
 	"github.com/Zhima-Mochi/easy-task-api/app/dto"
 	"github.com/Zhima-Mochi/easy-task-api/domain/service"
+	vo "github.com/Zhima-Mochi/easy-task-api/domain/valueobject"
 )
 
 type TaskAppService interface {
@@ -62,7 +63,19 @@ func (s *impl) UpdateTask(ctx context.Context, req *dto.TaskUpdateRequest) error
 	if err := req.Validate(); err != nil {
 		return err
 	}
-	task := assembler.ToDomainTaskUpdate(req)
+	task, err := s.taskService.GetTaskByID(ctx, req.ID)
+	if err != nil {
+		return err
+	}
+
+	if req.Name != nil {
+		task.UpdateName(*req.Name)
+	}
+
+	if req.Status != nil && *req.Status == vo.Completed {
+		task.Complete()
+	}
+
 	return s.taskService.UpdateTask(ctx, task)
 }
 

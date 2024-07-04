@@ -1,7 +1,10 @@
 {
     "swagger": "2.0",
     "info": {
-        "contact": {}
+        "description": "This is a simple task API.",
+        "title": "Easy Task API",
+        "contact": {},
+        "version": "1.0"
     },
     "paths": {
         "/tasks": {

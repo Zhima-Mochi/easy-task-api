@@ -59,6 +59,9 @@ definitions:
     - Completed
 info:
   contact: {}
+  description: This is a simple task API.
+  title: Easy Task API
+  version: "1.0"
 paths:
   /tasks:
     get:

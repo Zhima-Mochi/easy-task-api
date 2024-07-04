@@ -5,7 +5,7 @@ import (
 
 	"github.com/Zhima-Mochi/easy-task-api/app"
 	"github.com/Zhima-Mochi/easy-task-api/app/dto"
-	doc "github.com/Zhima-Mochi/easy-task-api/docs"
+	_ "github.com/Zhima-Mochi/easy-task-api/docs"
 	"github.com/Zhima-Mochi/easy-task-api/domain/repo"
 	"github.com/Zhima-Mochi/easy-task-api/domain/service"
 	"github.com/Zhima-Mochi/easy-task-api/infra/persistence"
@@ -158,6 +158,9 @@ func (h *handler) DeleteTask(c *gin.Context) {
 	c.JSON(204, nil)
 }
 
+// @title Easy Task API
+// @version 1.0
+// @description This is a simple task API.
 func main() {
 	logrus.SetFormatter(&logrus.JSONFormatter{})
 	defer func() {
@@ -183,11 +186,6 @@ func main() {
 
 	// swagger
 	router.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerfiles.Handler))
-
-	// swagger doc
-	doc.SwaggerInfo.Title = "Easy Task API"
-	doc.SwaggerInfo.Description = "This is a simple task API."
-	doc.SwaggerInfo.Version = "1.0"
 
 	if err := router.Run(":8080"); err != nil {
 		logrus.Fatalf("Failed to start server: %v", err)

@@ -1,0 +1,183 @@
+definitions:
+  dto.TaskCreateRequest:
+    properties:
+      name:
+        type: string
+    type: object
+  dto.TaskCreateResponse:
+    properties:
+      id:
+        type: string
+    type: object
+  dto.TaskResponse:
+    properties:
+      created_at:
+        type: string
+      id:
+        type: string
+      name:
+        type: string
+      status:
+        $ref: '#/definitions/vo.Status'
+      update_at:
+        type: string
+    type: object
+  dto.TaskUpdateRequest:
+    properties:
+      id:
+        type: string
+      name:
+        type: string
+      status:
+        $ref: '#/definitions/vo.Status'
+    type: object
+  main.Error:
+    properties:
+      code:
+        type: integer
+      message:
+        type: string
+    type: object
+  vo.Status:
+    enum:
+    - 0
+    - 1
+    type: integer
+    x-enum-varnames:
+    - Incomplete
+    - Completed
+info:
+  contact: {}
+paths:
+  /tasks:
+    get:
+      consumes:
+      - application/json
+      description: Get all tasks
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/dto.TaskResponse'
+            type: array
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/main.Error'
+      summary: Get all tasks
+    post:
+      consumes:
+      - application/json
+      description: Create a task
+      parameters:
+      - description: Task Create Request
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/dto.TaskCreateRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/dto.TaskCreateResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/main.Error'
+        "409":
+          description: Conflict
+          schema:
+            $ref: '#/definitions/main.Error'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/main.Error'
+      summary: Create a task
+  /tasks/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete a task
+      parameters:
+      - description: Task ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "204":
+          description: No Content
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/main.Error'
+      summary: Delete a task
+    get:
+      consumes:
+      - application/json
+      description: Get task by ID
+      parameters:
+      - description: Task ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dto.TaskResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/main.Error'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/main.Error'
+      summary: Get task by ID
+    put:
+      consumes:
+      - application/json
+      description: Update a task
+      parameters:
+      - description: Task ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Task Update Request
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/dto.TaskUpdateRequest'
+      produces:
+      - application/json
+      responses:
+        "204":
+          description: No Content
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/main.Error'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/main.Error'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/main.Error'
+      summary: Update a task
+swagger: "2.0"

@@ -12,7 +12,7 @@ import (
 )
 
 var (
-	mockCTX = context.Background()
+	mockCtx = context.Background()
 
 	mockTask = &entity.Task{
 		ID:     "1",
@@ -41,26 +41,26 @@ func TestCreateTask(t *testing.T) {
 
 	t.Run("CreateTask", func(t *testing.T) {
 		t.Run("Success", func(t *testing.T) {
-			mocks.mockTaskService.EXPECT().CreateTask(mockCTX, gomock.Any()).Return(nil)
+			mocks.mockTaskService.EXPECT().CreateTask(mockCtx, gomock.Any()).Return(nil)
 
 			req := &dto.TaskCreateRequest{
 				Name: "task1",
 			}
 
-			_, err := taskAppService.CreateTask(mockCTX, req)
+			_, err := taskAppService.CreateTask(mockCtx, req)
 			if err != nil {
 				t.Errorf("error should be nil, but got: %v", err)
 			}
 		})
 
 		t.Run("Error", func(t *testing.T) {
-			mocks.mockTaskService.EXPECT().CreateTask(mockCTX, gomock.Any()).Return(errors.New("error"))
+			mocks.mockTaskService.EXPECT().CreateTask(mockCtx, gomock.Any()).Return(errors.New("error"))
 
 			req := &dto.TaskCreateRequest{
 				Name: "task1",
 			}
 
-			_, err := taskAppService.CreateTask(mockCTX, req)
+			_, err := taskAppService.CreateTask(mockCtx, req)
 			if err == nil {
 				t.Error("error should not be nil")
 			}
@@ -78,9 +78,9 @@ func TestGetAllTask(t *testing.T) {
 
 	t.Run("GetAllTask", func(t *testing.T) {
 		t.Run("Success", func(t *testing.T) {
-			mocks.mockTaskService.EXPECT().GetAllTask(mockCTX).Return([]*entity.Task{mockTask}, nil)
+			mocks.mockTaskService.EXPECT().GetAllTask(mockCtx).Return([]*entity.Task{mockTask}, nil)
 
-			res, err := taskAppService.GetAllTask(mockCTX)
+			res, err := taskAppService.GetAllTask(mockCtx)
 			if err != nil {
 				t.Errorf("error should be nil, but got: %v", err)
 			}
@@ -95,9 +95,9 @@ func TestGetAllTask(t *testing.T) {
 		})
 
 		t.Run("Error", func(t *testing.T) {
-			mocks.mockTaskService.EXPECT().GetAllTask(mockCTX).Return(nil, errors.New("error"))
+			mocks.mockTaskService.EXPECT().GetAllTask(mockCtx).Return(nil, errors.New("error"))
 
-			_, err := taskAppService.GetAllTask(mockCTX)
+			_, err := taskAppService.GetAllTask(mockCtx)
 			if err == nil {
 				t.Error("error should not be nil")
 			}
@@ -115,9 +115,9 @@ func TestGetTaskByID(t *testing.T) {
 
 	t.Run("GetTaskByID", func(t *testing.T) {
 		t.Run("Success", func(t *testing.T) {
-			mocks.mockTaskService.EXPECT().GetTaskByID(mockCTX, mockTask.ID).Return(mockTask, nil)
+			mocks.mockTaskService.EXPECT().GetTaskByID(mockCtx, mockTask.ID).Return(mockTask, nil)
 
-			res, err := taskAppService.GetTaskByID(mockCTX, mockTask.ID)
+			res, err := taskAppService.GetTaskByID(mockCtx, mockTask.ID)
 			if err != nil {
 				t.Errorf("error should be nil, but got: %v", err)
 			}
@@ -128,9 +128,9 @@ func TestGetTaskByID(t *testing.T) {
 		})
 
 		t.Run("Error", func(t *testing.T) {
-			mocks.mockTaskService.EXPECT().GetTaskByID(mockCTX, mockTask.ID).Return(nil, errors.New("error"))
+			mocks.mockTaskService.EXPECT().GetTaskByID(mockCtx, mockTask.ID).Return(nil, errors.New("error"))
 
-			_, err := taskAppService.GetTaskByID(mockCTX, mockTask.ID)
+			_, err := taskAppService.GetTaskByID(mockCtx, mockTask.ID)
 			if err == nil {
 				t.Error("error should not be nil")
 			}
@@ -148,8 +148,8 @@ func TestUpdateTask(t *testing.T) {
 
 	t.Run("UpdateTask", func(t *testing.T) {
 		t.Run("Success", func(t *testing.T) {
-			mocks.mockTaskService.EXPECT().GetTaskByID(mockCTX, mockTask.ID).Return(mockTask, nil)
-			mocks.mockTaskService.EXPECT().UpdateTask(mockCTX, gomock.Any()).Return(nil)
+			mocks.mockTaskService.EXPECT().GetTaskByID(mockCtx, mockTask.ID).Return(mockTask, nil)
+			mocks.mockTaskService.EXPECT().UpdateTask(mockCtx, gomock.Any()).Return(nil)
 
 			req := &dto.TaskUpdateRequest{
 				ID: mockTask.ID,
@@ -157,14 +157,14 @@ func TestUpdateTask(t *testing.T) {
 			targetName := "task2"
 			req.Name = &targetName
 
-			err := taskAppService.UpdateTask(mockCTX, req)
+			err := taskAppService.UpdateTask(mockCtx, req)
 			if err != nil {
 				t.Errorf("error should be nil, but got: %v", err)
 			}
 		})
 
 		t.Run("Error", func(t *testing.T) {
-			mocks.mockTaskService.EXPECT().GetTaskByID(mockCTX, mockTask.ID).Return(nil, errors.New("error"))
+			mocks.mockTaskService.EXPECT().GetTaskByID(mockCtx, mockTask.ID).Return(nil, errors.New("error"))
 
 			req := &dto.TaskUpdateRequest{
 				ID: mockTask.ID,
@@ -172,7 +172,7 @@ func TestUpdateTask(t *testing.T) {
 			targetName := "task2"
 			req.Name = &targetName
 
-			err := taskAppService.UpdateTask(mockCTX, req)
+			err := taskAppService.UpdateTask(mockCtx, req)
 			if err == nil {
 				t.Error("error should not be nil")
 			}
@@ -190,18 +190,18 @@ func TestDeleteTask(t *testing.T) {
 
 	t.Run("DeleteTask", func(t *testing.T) {
 		t.Run("Success", func(t *testing.T) {
-			mocks.mockTaskService.EXPECT().DeleteTask(mockCTX, mockTask.ID).Return(nil)
+			mocks.mockTaskService.EXPECT().DeleteTask(mockCtx, mockTask.ID).Return(nil)
 
-			err := taskAppService.DeleteTask(mockCTX, mockTask.ID)
+			err := taskAppService.DeleteTask(mockCtx, mockTask.ID)
 			if err != nil {
 				t.Errorf("error should be nil, but got: %v", err)
 			}
 		})
 
 		t.Run("Error", func(t *testing.T) {
-			mocks.mockTaskService.EXPECT().DeleteTask(mockCTX, mockTask.ID).Return(errors.New("error"))
+			mocks.mockTaskService.EXPECT().DeleteTask(mockCtx, mockTask.ID).Return(errors.New("error"))
 
-			err := taskAppService.DeleteTask(mockCTX, mockTask.ID)
+			err := taskAppService.DeleteTask(mockCtx, mockTask.ID)
 			if err == nil {
 				t.Error("error should not be nil")
 			}

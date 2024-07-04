@@ -189,5 +189,7 @@ func main() {
 	doc.SwaggerInfo.Description = "This is a simple task API."
 	doc.SwaggerInfo.Version = "1.0"
 
-	router.Run(":8080")
+	if err := router.Run(":8080"); err != nil {
+		logrus.Fatalf("Failed to start server: %v", err)
+	}
 }

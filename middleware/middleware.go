@@ -38,15 +38,6 @@ func TraceMiddleware() gin.HandlerFunc {
 			fields["request_body"] = string(bodyBytes)
 		}
 
-		defer func() {
-			if r := recover(); r != nil {
-				logrus.WithFields(logrus.Fields{
-					"traceID": traceID,
-					"error":   r,
-				}).Error("[HTTP Server] Recovered from a panic")
-			}
-		}()
-
 		c.Next()
 
 		fields["latency"] = time.Since(startTime).Milliseconds()

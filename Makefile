@@ -12,3 +12,9 @@ prepare:
 
 run:
 	go run main.go
+
+docker-build:
+	docker build -t easy-task-api .
+
+docker-run:
+	docker run --rm -it --name easy-task-api -p 8080:8080 easy-task-api
